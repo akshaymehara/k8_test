@@ -1,0 +1,47 @@
+prerequisite:
+minikube with docker cli and ingress enabled should be installed
+
+1. create a docker file
+2. build a docker image ===> docker build -t image_name:tag .
+3. create a helm chart for repo ==> helm create chart-name
+4. change the values of deployment as well as ingress, services and values yml files
+5. helm will deploy the images
+ a. helm list
+ b. helm install app_name .
+ c. helm uninstall app_name
+
+
+6. to make changes in ingress
+ a. kubectl get configmap -n ingress-nginx
+ b. kubectl get configmap ingress-nginx-controller -n ingress-nginx -o yaml
+ c. kubectl edit configmap ingress-nginx-controller -n ingress-nginx
+ d. kubectl rollout restart deployment ingress-nginx-controller -n ingress-nginx
+
+these values can be put for file size and buffer request
+ a. client-body-timeout: 60s
+ b. client-max-body-size: 64m
+ c. proxy-body-size: 64m
+ d. server-tokens: "false"
+ e. use-forwarded-headers: "true"
+
+
+
+some helpful commands for minikube terminal
+a. kubectl get pods
+b. kubectl get svc
+c. kubectl get services
+
+for the logs
+a. kubectl logs <pod-name> -n <namespace>
+b. kubectl logs <pod-name> -c <container-name> -n <namespace>
+c. kubectl logs <pod-name> --previous -n <namespace>
+d. kubectl logs -l app=<label> -n <namespace>
+
+
+Summary of Commands:
+1. Single pod logs: kubectl logs <pod-name> -n <namespace>
+2. Follow logs: kubectl logs -f <pod-name> -n <namespace>
+3. Specific container logs: kubectl logs <pod-name> -c <container-name> -n <namespace>
+4. Previous logs: kubectl logs <pod-name> --previous -n <namespace>
+5. All pods in a deployment: kubectl logs -l app=<label> -n <namespace>
+
